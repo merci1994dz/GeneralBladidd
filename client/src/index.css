@@ -1,0 +1,141 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
+
+:root {
+  --background: hsl(0, 0%, 100%);
+  --foreground: hsl(222, 47%, 11%);
+  --muted: hsl(210, 40%, 96%);
+  --muted-foreground: hsl(215, 16%, 47%);
+  --popover: hsl(0, 0%, 100%);
+  --popover-foreground: hsl(222, 47%, 11%);
+  --card: hsl(0, 0%, 100%);
+  --card-foreground: hsl(222, 47%, 11%);
+  --border: hsl(214, 32%, 91%);
+  --input: hsl(214, 32%, 91%);
+  --primary: hsl(222, 47%, 11%);
+  --primary-foreground: hsl(210, 40%, 98%);
+  --secondary: hsl(210, 40%, 96%);
+  --secondary-foreground: hsl(222, 47%, 11%);
+  --accent: hsl(210, 40%, 96%);
+  --accent-foreground: hsl(222, 47%, 11%);
+  --destructive: hsl(0, 84%, 60%);
+  --destructive-foreground: hsl(210, 40%, 98%);
+  --ring: hsl(222, 47%, 11%);
+  --radius: 0.5rem;
+  
+  /* Custom Arabic TV App Colors */
+  --tv-primary: hsl(222, 47%, 11%);
+  --tv-secondary: hsl(221, 83%, 53%);
+  --tv-accent: hsl(142, 76%, 36%);
+  --tv-dark: hsl(222, 84%, 5%);
+  --tv-surface: hsl(222, 47%, 11%);
+  --tv-success: hsl(142, 76%, 36%);
+  --tv-warning: hsl(38, 92%, 50%);
+}
+
+.dark {
+  --background: hsl(222, 84%, 5%);
+  --foreground: hsl(210, 40%, 98%);
+  --muted: hsl(217, 32%, 17%);
+  --muted-foreground: hsl(215, 20%, 65%);
+  --popover: hsl(222, 84%, 5%);
+  --popover-foreground: hsl(210, 40%, 98%);
+  --card: hsl(222, 84%, 5%);
+  --card-foreground: hsl(210, 40%, 98%);
+  --border: hsl(217, 32%, 17%);
+  --input: hsl(217, 32%, 17%);
+  --primary: hsl(210, 40%, 98%);
+  --primary-foreground: hsl(222, 47%, 11%);
+  --secondary: hsl(217, 32%, 17%);
+  --secondary-foreground: hsl(210, 40%, 98%);
+  --accent: hsl(217, 32%, 17%);
+  --accent-foreground: hsl(210, 40%, 98%);
+  --destructive: hsl(0, 63%, 31%);
+  --destructive-foreground: hsl(210, 40%, 98%);
+  --ring: hsl(217, 32%, 17%);
+}
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+
+  body {
+    @apply font-sans antialiased bg-background text-foreground;
+    font-family: 'Inter', sans-serif;
+    direction: rtl;
+  }
+
+  html {
+    direction: rtl;
+  }
+}
+
+@layer utilities {
+  .tv-primary {
+    background-color: var(--tv-primary);
+  }
+  
+  .tv-secondary {
+    background-color: var(--tv-secondary);
+  }
+  
+  .tv-accent {
+    background-color: var(--tv-accent);
+  }
+  
+  .tv-dark {
+    background-color: var(--tv-dark);
+  }
+  
+  .tv-surface {
+    background-color: var(--tv-surface);
+  }
+  
+  .text-tv-accent {
+    color: var(--tv-accent);
+  }
+  
+  .text-tv-secondary {
+    color: var(--tv-secondary);
+  }
+  
+  .bg-tv-primary {
+    background-color: var(--tv-primary);
+  }
+  
+  .bg-tv-secondary {
+    background-color: var(--tv-secondary);
+  }
+  
+  .bg-tv-accent {
+    background-color: var(--tv-accent);
+  }
+  
+  .bg-tv-dark {
+    background-color: var(--tv-dark);
+  }
+  
+  .bg-tv-surface {
+    background-color: var(--tv-surface);
+  }
+  
+  .hover\:bg-tv-accent:hover {
+    background-color: var(--tv-accent);
+  }
+  
+  .hover\:bg-tv-secondary:hover {
+    background-color: var(--tv-secondary);
+  }
+  
+  .border-tv-accent {
+    border-color: var(--tv-accent);
+  }
+  
+  .focus\:border-tv-accent:focus {
+    border-color: var(--tv-accent);
+  }
+}

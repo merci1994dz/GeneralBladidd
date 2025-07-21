@@ -16,10 +16,12 @@ This is a full-stack Arabic TV streaming application built with React on the fro
 
 ### Backend Architecture
 - **Framework**: Express.js with TypeScript
-- **Database**: PostgreSQL with Drizzle ORM
+- **Database**: PostgreSQL with Drizzle ORM (Active)
 - **Database Provider**: Neon Database (serverless PostgreSQL)
+- **Storage Layer**: DatabaseStorage implementation using Drizzle ORM
 - **API Style**: RESTful APIs with JSON responses
 - **Development**: Hot reload with Vite middleware integration
+- **Database Seeding**: Automatic initialization with 15 Arabic channels
 
 ## Key Components
 

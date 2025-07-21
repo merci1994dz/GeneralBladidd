@@ -3,14 +3,10 @@ import { Play, Pause, Volume2, VolumeX, Maximize, Settings, Loader2 } from "luci
 import { Button } from "@/components/ui/button";
 import { Slider } from "@/components/ui/slider";
 
+import type { Channel } from "@shared/schema";
+
 interface VideoPlayerProps {
-  channel: {
-    id: number;
-    name: string;
-    url: string;
-    category: string;
-    description?: string;
-  } | null;
+  channel: Channel | null;
 }
 
 export default function VideoPlayer({ channel }: VideoPlayerProps) {
@@ -83,23 +79,28 @@ export default function VideoPlayer({ channel }: VideoPlayerProps) {
   }
 
   return (
-    <div className="aspect-video bg-black relative group">
+    <div className="aspect-video bg-tv-gradient relative group shadow-2xl border-b-4 border-tv-accent/50">
       {/* Video element */}
       <video
         ref={videoRef}
-        className="w-full h-full object-cover"
+        className="w-full h-full object-cover rounded-t-lg"
         poster={`https://via.placeholder.com/1280x720/1e293b/10b981?text=${encodeURIComponent(channel.name)}`}
       >
         <source src={channel.url} type="application/x-mpegURL" />
-        المتصفح لا يدعم تشغيل الفيديو
+        <span className="arabic-text">المتصفح لا يدعم تشغيل الفيديو</span>
       </video>
 
-      {/* Loading overlay */}
+      {/* Enhanced Loading overlay */}
       {isLoading && (
-        <div className="absolute inset-0 bg-black/80 flex items-center justify-center">
-          <div className="text-center">
-            <Loader2 className="w-12 h-12 text-tv-accent animate-spin mb-4 mx-auto" />
-            <p className="text-white text-lg">جاري تحميل {channel.name}...</p>
+        <div className="absolute inset-0 bg-tv-gradient flex items-center justify-center backdrop-blur-sm">
+          <div className="text-center bg-black/50 rounded-2xl p-8 border border-tv-accent/30">
+            <Loader2 className="w-16 h-16 text-tv-accent animate-spin mb-6 mx-auto" />
+            <p className="text-white text-xl arabic-text font-semibold">جاري تحميل {channel.name}...</p>
+            <div className="mt-4 flex justify-center">
+              <div className="w-48 h-2 bg-gray-700 rounded-full overflow-hidden">
+                <div className="h-full bg-gradient-to-r from-tv-accent to-tv-secondary animate-pulse"></div>
+              </div>
+            </div>
           </div>
         </div>
       )}
@@ -132,7 +133,7 @@ export default function VideoPlayer({ channel }: VideoPlayerProps) {
         <div className="absolute top-4 right-4 bg-black/70 backdrop-blur-sm rounded-lg px-3 py-2">
           <h3 className="text-white font-semibold">{channel.name}</h3>
           {channel.description && (
-            <p className="text-white/80 text-sm">{channel.description}</p>
+            <p className="text-white/80 text-sm arabic-text">{channel.description}</p>
           )}
         </div>
       )}

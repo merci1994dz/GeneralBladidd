@@ -41,7 +41,7 @@ export type User = typeof users.$inferSelect;
 // Channel categories enum
 export const channelCategories = [
   'sports',
-  'algerian',
+  'algerian', 
   'news',
   'kids',
   'entertainment',

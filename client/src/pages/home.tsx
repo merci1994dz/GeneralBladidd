@@ -7,6 +7,7 @@ import WelcomeScreen from "@/components/welcome-screen";
 import VideoPlayer from "@/components/video-player";
 import CategoryTabs from "@/components/category-tabs";
 import ChannelCard from "@/components/channel-card";
+import FavoritesModal from "@/components/favorites-modal";
 import { useToast } from "@/hooks/use-toast";
 import type { Channel } from "@shared/schema";
 
@@ -58,25 +59,33 @@ export default function Home() {
 
   return (
     <div className="min-h-screen bg-tv-dark">
-      {/* Top Navigation */}
-      <nav className="bg-tv-primary border-b border-gray-700 px-4 py-3">
+      {/* Enhanced Top Navigation */}
+      <nav className="bg-tv-gradient border-b-2 border-tv-accent/30 px-4 py-4 shadow-2xl">
         <div className="flex items-center justify-between">
-          <div className="flex items-center gap-3">
-            <Tv className="w-6 h-6 text-tv-accent" />
-            <h1 className="text-lg font-bold text-white">جنرال بلادي TV</h1>
+          <div className="flex items-center gap-4">
+            <div className="w-10 h-10 bg-tv-accent rounded-full flex items-center justify-center">
+              <Tv className="w-6 h-6 text-white" />
+            </div>
+            <div>
+              <h1 className="text-2xl font-bold text-white arabic-heading">جنرال بلادي TV</h1>
+              <p className="text-tv-gold text-sm arabic-text">منصة البث المباشر</p>
+            </div>
           </div>
           
-          <div className="flex items-center gap-2">
+          <div className="flex items-center gap-3">
             <Link href="/admin">
-              <Button variant="secondary" size="sm">
+              <Button variant="secondary" size="sm" className="bg-tv-surface hover:bg-tv-secondary text-white">
                 <Settings className="w-4 h-4 ml-1" />
-                إدارة
+                <span className="arabic-text">إدارة</span>
               </Button>
             </Link>
-            <Button variant="outline" size="sm">
-              <Heart className="w-4 h-4 ml-1" />
-              المفضلة ({favorites.length})
-            </Button>
+            <FavoritesModal
+              channels={channels}
+              favorites={favorites}
+              onToggleFavorite={handleToggleFavorite}
+              onPlayChannel={handleChannelPlay}
+              currentChannelId={currentChannel?.id}
+            />
           </div>
         </div>
       </nav>
@@ -90,28 +99,34 @@ export default function Home() {
       {/* Video Player */}
       <VideoPlayer channel={currentChannel} />
 
-      {/* Channels List */}
-      <div className="p-4">
-        <h2 className="text-xl font-bold mb-4 text-white">
-          القنوات المتاحة ({filteredChannels.length})
-        </h2>
+      {/* Enhanced Channels List */}
+      <div className="p-6">
+        <div className="flex items-center justify-between mb-6">
+          <h2 className="text-2xl font-bold text-white arabic-heading">
+            القنوات المتاحة ({filteredChannels.length})
+          </h2>
+          <div className="flex items-center gap-2 text-tv-accent">
+            <div className="w-2 h-2 bg-tv-accent rounded-full animate-pulse"></div>
+            <span className="text-sm arabic-text">متاح الآن</span>
+          </div>
+        </div>
         
         {isLoading ? (
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
             {[...Array(6)].map((_, i) => (
-              <div key={i} className="bg-tv-surface rounded-lg p-4 animate-pulse">
-                <div className="flex items-center gap-3">
-                  <div className="w-12 h-12 bg-gray-600 rounded-lg"></div>
+              <div key={i} className="bg-tv-surface rounded-xl p-5 animate-pulse border border-gray-600">
+                <div className="flex items-center gap-4">
+                  <div className="w-14 h-14 bg-gray-600 rounded-xl shimmer"></div>
                   <div className="flex-1">
-                    <div className="h-4 bg-gray-600 rounded mb-2"></div>
-                    <div className="h-3 bg-gray-600 rounded w-3/4"></div>
+                    <div className="h-5 bg-gray-600 rounded-lg mb-3 shimmer"></div>
+                    <div className="h-4 bg-gray-600 rounded-lg w-3/4 shimmer"></div>
                   </div>
                 </div>
               </div>
             ))}
           </div>
         ) : (
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
             {filteredChannels.map((channel) => (
               <ChannelCard
                 key={channel.id}

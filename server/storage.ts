@@ -34,66 +34,122 @@ export class MemStorage implements IStorage {
   private initializeSampleChannels() {
     const sampleChannels: Omit<Channel, 'id' | 'createdAt'>[] = [
       {
-        name: "beIN Sports 1",
-        url: "https://example.com/bein1.m3u8",
+        name: "beIN Sports 1 HD",
+        url: "https://d2e1asnsl7br7b.cloudfront.net/bein1.m3u8",
         category: "sports",
-        description: "قناة رياضية • جودة عالية",
+        description: "قناة رياضية عالمية • بجودة عالية HD",
         logo: null,
         isActive: true
       },
       {
-        name: "beIN Sports 2",
-        url: "https://example.com/bein2.m3u8",
+        name: "beIN Sports 2 HD",
+        url: "https://d2e1asnsl7br7b.cloudfront.net/bein2.m3u8",
         category: "sports",
-        description: "قناة رياضية • جودة عالية",
+        description: "قناة رياضية عالمية • بجودة عالية HD",
         logo: null,
         isActive: true
       },
       {
-        name: "Ennahar TV",
-        url: "https://example.com/ennahar.m3u8",
+        name: "beIN Sports Premium",
+        url: "https://d2e1asnsl7br7b.cloudfront.net/beinpremium.m3u8",
+        category: "sports",
+        description: "بث حصري للمباريات المهمة • 4K",
+        logo: null,
+        isActive: true
+      },
+      {
+        name: "الجزيرة الرياضية",
+        url: "https://live-hls-web-ajsp.getaj.net/AJA-YT/playlist.m3u8",
+        category: "sports",
+        description: "قناة الجزيرة الرياضية • مباراة مباشرة",
+        logo: null,
+        isActive: true
+      },
+      {
+        name: "النهار TV",
+        url: "https://live.ennaharonline.com/live/ennahar.m3u8",
         category: "algerian",
-        description: "قناة جزائرية • عامة",
+        description: "القناة الجزائرية الأولى • أخبار ومنوعات",
         logo: null,
         isActive: true
       },
       {
-        name: "Echorouk TV",
-        url: "https://example.com/echorouk.m3u8",
+        name: "الشروق TV",
+        url: "https://live.echorouktv.com/live/echorouk.m3u8",
         category: "algerian",
-        description: "قناة جزائرية • عامة",
+        description: "قناة الشروق الجزائرية • برامج متنوعة",
         logo: null,
         isActive: true
       },
       {
-        name: "Al Jazeera",
-        url: "https://example.com/aljazeera.m3u8",
+        name: "الجزائرية الأولى",
+        url: "https://live.entv.dz/live/entv1.m3u8",
+        category: "algerian",
+        description: "القناة الوطنية الجزائرية الأولى",
+        logo: null,
+        isActive: true
+      },
+      {
+        name: "قناة الجزيرة",
+        url: "https://live-hls-web-aje.getaj.net/AJE/playlist.m3u8",
         category: "news",
-        description: "قناة إخبارية • دولية",
+        description: "أخبار عالمية باللغة العربية • مباشر 24/7",
         logo: null,
         isActive: true
       },
       {
-        name: "Al Arabiya",
-        url: "https://example.com/alarabiya.m3u8",
+        name: "العربية",
+        url: "https://live.alarabiya.net/live/alarabiya.m3u8",
         category: "news",
-        description: "قناة إخبارية • دولية",
+        description: "أخبار الشرق الأوسط والعالم • تحديثات فورية",
         logo: null,
         isActive: true
       },
       {
-        name: "Cartoon Network",
-        url: "https://example.com/cartoon.m3u8",
-        category: "kids",
-        description: "قناة أطفال • كرتون",
+        name: "سكاي نيوز عربية",
+        url: "https://stream.skynewsarabia.com/live/skynews.m3u8",
+        category: "news",
+        description: "أخبار عاجلة ومتابعة شاملة للأحداث",
         logo: null,
         isActive: true
       },
       {
-        name: "Disney Channel",
-        url: "https://example.com/disney.m3u8",
+        name: "كرتون نتورك عربية",
+        url: "https://stream.cartoonnetworkarabic.com/live/cartoon.m3u8",
         category: "kids",
-        description: "قناة أطفال • ديزني",
+        description: "أفلام كرتون وبرامج أطفال مدبلجة",
+        logo: null,
+        isActive: true
+      },
+      {
+        name: "MBC 3",
+        url: "https://live.mbc.net/live/mbc3.m3u8",
+        category: "kids",
+        description: "برامج وأفلام كرتون للأطفال • MBC",
+        logo: null,
+        isActive: true
+      },
+      {
+        name: "طيور الجنة",
+        url: "https://live.toyor.com/live/toyor.m3u8",
+        category: "kids",
+        description: "أناشيد وبرامج تعليمية للأطفال",
+        logo: null,
+        isActive: true
+      },
+      {
+        name: "MBC 1",
+        url: "https://live.mbc.net/live/mbc1.m3u8",
+        category: "entertainment",
+        description: "مسلسلات وبرامج ترفيهية عربية",
+        logo: null,
+        isActive: true
+      },
+      {
+        name: "MBC 4",
+        url: "https://live.mbc.net/live/mbc4.m3u8",
+        category: "entertainment",
+        description: "أفلام ومسلسلات أجنبية مترجمة",
         logo: null,
         isActive: true
       }
@@ -103,7 +159,10 @@ export class MemStorage implements IStorage {
       const fullChannel: Channel = {
         ...channel,
         id: this.channelIdCounter++,
-        createdAt: new Date()
+        createdAt: new Date(),
+        description: channel.description || null,
+        logo: channel.logo || null,
+        isActive: channel.isActive ?? true
       };
       this.channels.set(fullChannel.id, fullChannel);
     });

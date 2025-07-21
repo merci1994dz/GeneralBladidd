@@ -8,26 +8,26 @@ interface CategoryTabsProps {
   onCategoryChange: (category: string) => void;
 }
 
-const categories = ['all', 'sports', 'algerian', 'news', 'kids'];
+const categories = ['all', 'sports', 'algerian', 'news', 'kids', 'entertainment'];
 
 export default function CategoryTabs({ activeCategory, onCategoryChange }: CategoryTabsProps) {
   return (
-    <div className="bg-tv-surface border-b border-gray-700 px-4 py-3">
+    <div className="bg-tv-gradient border-b border-tv-accent/30 px-6 py-4 shadow-lg">
       <ScrollArea className="w-full">
-        <div className="flex gap-2 w-max">
+        <div className="flex gap-3 w-max">
           {categories.map((category) => (
             <Button
               key={category}
               onClick={() => onCategoryChange(category)}
               variant="ghost"
               className={cn(
-                "px-4 py-2 text-sm font-medium whitespace-nowrap transition-colors",
+                "px-6 py-3 text-sm font-bold whitespace-nowrap transition-all duration-300 rounded-xl arabic-text border-2",
                 activeCategory === category
-                  ? "bg-tv-accent text-white hover:bg-tv-accent/90"
-                  : "bg-gray-600 text-white hover:bg-gray-500"
+                  ? "bg-tv-accent text-white hover:bg-tv-accent/90 border-tv-accent shadow-lg scale-105"
+                  : "bg-tv-surface/80 text-gray-300 hover:bg-tv-secondary hover:text-white border-transparent hover:border-tv-secondary/50"
               )}
             >
-              <i className={`${getCategoryIcon(category)} ml-2`} />
+              <i className={`${getCategoryIcon(category)} ml-2 text-lg`} />
               {arabicCategoryNames[category as keyof typeof arabicCategoryNames]}
             </Button>
           ))}

@@ -8,7 +8,7 @@ interface CategoryTabsProps {
   onCategoryChange: (category: string) => void;
 }
 
-const categories = ['all', 'sports', 'algerian', 'news', 'kids', 'entertainment'];
+const categories = ['all', 'sports', 'algerian', 'news', 'kids', 'entertainment', 'religious', 'documentary'];
 
 export default function CategoryTabs({ activeCategory, onCategoryChange }: CategoryTabsProps) {
   return (

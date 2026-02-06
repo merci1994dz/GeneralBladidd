@@ -6,7 +6,6 @@ import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog";
 import { useToast } from "@/hooks/use-toast";
 import { apiRequest } from "@/lib/queryClient";
 import { Save, Plus, Edit, Trash2, TrendingUp, Users, Play, Activity } from "lucide-react";
@@ -14,7 +13,6 @@ import { formatArabicNumber } from "@/lib/arabic-utils";
 import type { Channel, InsertChannel } from "@shared/schema";
 
 export default function AdminPanel() {
-  const [isAddDialogOpen, setIsAddDialogOpen] = useState(false);
   const [editingChannel, setEditingChannel] = useState<Channel | null>(null);
   const [formData, setFormData] = useState<InsertChannel>({
     name: "",
@@ -50,7 +48,6 @@ export default function AdminPanel() {
         title: "تم إنشاء القناة بنجاح",
         description: "تم إضافة القناة الجديدة إلى النظام",
       });
-      setIsAddDialogOpen(false);
       resetForm();
     },
     onError: () => {
@@ -242,6 +239,7 @@ export default function AdminPanel() {
                     <SelectItem value="kids">أطفال</SelectItem>
                     <SelectItem value="entertainment">ترفيه</SelectItem>
                     <SelectItem value="religious">دينية</SelectItem>
+                    <SelectItem value="documentary">وثائقية</SelectItem>
                   </SelectContent>
                 </Select>
               </div>

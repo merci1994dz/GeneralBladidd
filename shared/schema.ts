@@ -1,16 +1,16 @@
-import { pgTable, text, serial, integer, boolean, timestamp } from "drizzle-orm/pg-core";
+import { sqliteTable, text, integer } from "drizzle-orm/sqlite-core";
 import { createInsertSchema } from "drizzle-zod";
 import { z } from "zod";
 
-export const channels = pgTable("channels", {
-  id: serial("id").primaryKey(),
+export const channels = sqliteTable("channels", {
+  id: integer("id").primaryKey({ autoIncrement: true }),
   name: text("name").notNull(),
   url: text("url").notNull(),
   category: text("category").notNull(),
   description: text("description"),
   logo: text("logo"),
-  isActive: boolean("is_active").default(true),
-  createdAt: timestamp("created_at").defaultNow(),
+  isActive: integer("is_active", { mode: 'boolean' }).default(true),
+  createdAt: integer("created_at", { mode: 'timestamp' }).default(new Date()),
 });
 
 export const insertChannelSchema = createInsertSchema(channels).omit({
@@ -24,8 +24,8 @@ export type Channel = typeof channels.$inferSelect;
 export type InsertChannel = z.infer<typeof insertChannelSchema>;
 export type UpdateChannel = z.infer<typeof updateChannelSchema>;
 
-export const users = pgTable("users", {
-  id: serial("id").primaryKey(),
+export const users = sqliteTable("users", {
+  id: integer("id").primaryKey({ autoIncrement: true }),
   username: text("username").notNull().unique(),
   password: text("password").notNull(),
 });

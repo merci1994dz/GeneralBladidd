@@ -1,0 +1,686 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>جنرال بلادي TV - تطبيق البث المباشر</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" rel="stylesheet">
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        'inter': ['Inter', 'sans-serif'],
+                    },
+                    colors: {
+                        'primary': '#1E293B',
+                        'secondary': '#3B82F6',
+                        'accent': '#10B981',
+                        'dark': '#0F172A',
+                        'surface': '#1E293B',
+                        'success': '#10B981',
+                        'warning': '#F59E0B',
+                    }
+                }
+            }
+        }
+    </script>
+</head>
+<body class="bg-dark text-white font-inter">
+    
+    <!-- @COMPONENT: WelcomeScreen -->
+    <div id="welcomeScreen" class="min-h-screen bg-gradient-to-b from-primary to-dark flex items-center justify-center">
+        <div class="text-center px-6">
+            <div class="mb-8">
+                <i class="fas fa-tv text-6xl text-accent mb-4"></i>
+                <h1 class="text-4xl font-bold mb-2 text-white">جنرال بلادي TV</h1>
+                <p class="text-gray-300 text-lg">تطبيق البث المباشر المطور</p>
+            </div>
+            
+            <div class="space-y-4 max-w-md mx-auto">
+                <div class="flex items-center justify-center space-x-2 space-x-reverse">
+                    <i class="fas fa-satellite-dish text-accent"></i>
+                    <span class="text-gray-300">دعم جميع روابط IPTV</span>
+                </div>
+                <div class="flex items-center justify-center space-x-2 space-x-reverse">
+                    <i class="fas fa-mobile-alt text-accent"></i>
+                    <span class="text-gray-300">متوافق مع الهواتف الذكية</span>
+                </div>
+                <div class="flex items-center justify-center space-x-2 space-x-reverse">
+                    <i class="fas fa-language text-accent"></i>
+                    <span class="text-gray-300">واجهة عربية 100%</span>
+                </div>
+            </div>
+            
+            <button onclick="showMainApp()" class="mt-8 bg-accent hover:bg-green-600 text-white px-8 py-3 rounded-lg text-lg font-semibold transition-colors">
+                <i class="fas fa-play mr-2"></i>
+                ابدأ المشاهدة
+            </button>
+            
+            <div class="mt-8 text-sm text-gray-400">
+                <p>تطوير: <span class="text-accent font-semibold">merci1994dz</span></p>
+            </div>
+        </div>
+    </div>
+    <!-- @END_COMPONENT: WelcomeScreen -->
+
+    <!-- @COMPONENT: MainApp -->
+    <div id="mainApp" class="hidden min-h-screen bg-dark">
+        
+        <!-- @COMPONENT: TopNavigation -->
+        <nav class="bg-primary border-b border-gray-700 px-4 py-3">
+            <div class="flex items-center justify-between">
+                <div class="flex items-center space-x-3 space-x-reverse">
+                    <i class="fas fa-tv text-accent text-xl"></i>
+                    <h1 class="text-lg font-bold text-white">جنرال بلادي TV</h1>
+                </div>
+                
+                <div class="flex items-center space-x-2 space-x-reverse">
+                    <button onclick="showAdminPanel()" class="bg-secondary hover:bg-blue-600 text-white px-3 py-1 rounded-md text-sm transition-colors">
+                        <i class="fas fa-cog mr-1"></i>
+                        إدارة
+                    </button>
+                    <button class="bg-gray-600 hover:bg-gray-500 text-white px-3 py-1 rounded-md text-sm transition-colors">
+                        <i class="fas fa-heart mr-1"></i>
+                        المفضلة
+                    </button>
+                </div>
+            </div>
+        </nav>
+        <!-- @END_COMPONENT: TopNavigation -->
+
+        <!-- @COMPONENT: CategoryTabs -->
+        <div class="bg-surface border-b border-gray-700 px-4 py-3">
+            <div class="flex space-x-2 space-x-reverse overflow-x-auto">
+                <button onclick="showCategory('all')" class="category-tab active bg-accent text-white px-4 py-2 rounded-lg text-sm font-medium whitespace-nowrap">
+                    <i class="fas fa-th-large mr-1"></i>
+                    الكل
+                </button>
+                <button onclick="showCategory('sports')" class="category-tab bg-gray-600 hover:bg-gray-500 text-white px-4 py-2 rounded-lg text-sm font-medium whitespace-nowrap">
+                    <i class="fas fa-futbol mr-1"></i>
+                    رياضية
+                </button>
+                <button onclick="showCategory('algerian')" class="category-tab bg-gray-600 hover:bg-gray-500 text-white px-4 py-2 rounded-lg text-sm font-medium whitespace-nowrap">
+                    <i class="fas fa-flag mr-1"></i>
+                    جزائرية
+                </button>
+                <button onclick="showCategory('news')" class="category-tab bg-gray-600 hover:bg-gray-500 text-white px-4 py-2 rounded-lg text-sm font-medium whitespace-nowrap">
+                    <i class="fas fa-newspaper mr-1"></i>
+                    إخبارية
+                </button>
+                <button onclick="showCategory('kids')" class="category-tab bg-gray-600 hover:bg-gray-500 text-white px-4 py-2 rounded-lg text-sm font-medium whitespace-nowrap">
+                    <i class="fas fa-child mr-1"></i>
+                    أطفال
+                </button>
+            </div>
+        </div>
+        <!-- @END_COMPONENT: CategoryTabs -->
+
+        <!-- @COMPONENT: VideoPlayer -->
+        <div id="videoPlayer" class="bg-black relative">
+            <div class="aspect-video bg-black flex items-center justify-center">
+                <!-- Video player placeholder with streaming interface -->
+                <div class="w-full h-full relative">
+                    <!-- Video will be loaded here -->
+                    <div class="absolute inset-0 bg-gradient-to-b from-transparent to-black/50 flex items-center justify-center">
+                        <div class="text-center">
+                            <i class="fas fa-play-circle text-6xl text-white/80 mb-4"></i>
+                            <p class="text-white/80">اختر قناة للبدء في المشاهدة</p>
+                        </div>
+                    </div>
+                    
+                    <!-- Video controls overlay -->
+                    <div class="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/80 to-transparent p-4">
+                        <div class="flex items-center justify-between">
+                            <div class="flex items-center space-x-4 space-x-reverse">
+                                <button class="text-white hover:text-accent transition-colors">
+                                    <i class="fas fa-play text-2xl"></i>
+                                </button>
+                                <button class="text-white hover:text-accent transition-colors">
+                                    <i class="fas fa-volume-up text-lg"></i>
+                                </button>
+                                <div class="bg-white/20 h-1 w-32 rounded-full">
+                                    <div class="bg-accent h-full w-1/3 rounded-full"></div>
+                                </div>
+                            </div>
+                            
+                            <div class="flex items-center space-x-2 space-x-reverse">
+                                <button class="text-white hover:text-accent transition-colors">
+                                    <i class="fas fa-expand text-lg"></i>
+                                </button>
+                                <button class="text-white hover:text-accent transition-colors">
+                                    <i class="fas fa-cog text-lg"></i>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- @END_COMPONENT: VideoPlayer -->
+
+        <!-- @COMPONENT: ChannelsList -->
+        <div class="p-4">
+            <h2 class="text-xl font-bold mb-4 text-white">القنوات المتاحة</h2>
+            
+            <!-- @MAP: channels.map(channel => ( -->
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+                
+                <!-- Sports Channels -->
+                <div class="channel-card sports bg-surface rounded-lg p-4 hover:bg-gray-700 transition-colors cursor-pointer" onclick="playChannel('beIN Sports 1')">
+                    <div class="flex items-center space-x-3 space-x-reverse">
+                        <!-- Modern sports channel logo placeholder -->
+                        <div class="w-12 h-12 bg-gradient-to-br from-red-500 to-red-600 rounded-lg flex items-center justify-center">
+                            <i class="fas fa-futbol text-white text-lg"></i>
+                        </div>
+                        <div class="flex-1">
+                            <h3 class="font-semibold text-white">beIN Sports 1</h3>
+                            <p class="text-sm text-gray-400">رياضية • جودة عالية</p>
+                            <div class="flex items-center mt-1">
+                                <div class="w-2 h-2 bg-accent rounded-full mr-2"></div>
+                                <span class="text-xs text-accent">مباشر</span>
+                            </div>
+                        </div>
+                        <button class="text-gray-400 hover:text-accent transition-colors">
+                            <i class="fas fa-heart"></i>
+                        </button>
+                    </div>
+                </div>
+
+                <div class="channel-card sports bg-surface rounded-lg p-4 hover:bg-gray-700 transition-colors cursor-pointer" onclick="playChannel('beIN Sports 2')">
+                    <div class="flex items-center space-x-3 space-x-reverse">
+                        <div class="w-12 h-12 bg-gradient-to-br from-blue-500 to-blue-600 rounded-lg flex items-center justify-center">
+                            <i class="fas fa-basketball-ball text-white text-lg"></i>
+                        </div>
+                        <div class="flex-1">
+                            <h3 class="font-semibold text-white">beIN Sports 2</h3>
+                            <p class="text-sm text-gray-400">رياضية • جودة عالية</p>
+                            <div class="flex items-center mt-1">
+                                <div class="w-2 h-2 bg-accent rounded-full mr-2"></div>
+                                <span class="text-xs text-accent">مباشر</span>
+                            </div>
+                        </div>
+                        <button class="text-gray-400 hover:text-accent transition-colors">
+                            <i class="fas fa-heart"></i>
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Algerian Channels -->
+                <div class="channel-card algerian bg-surface rounded-lg p-4 hover:bg-gray-700 transition-colors cursor-pointer" onclick="playChannel('Ennahar TV')">
+                    <div class="flex items-center space-x-3 space-x-reverse">
+                        <div class="w-12 h-12 bg-gradient-to-br from-green-500 to-green-600 rounded-lg flex items-center justify-center">
+                            <i class="fas fa-flag text-white text-lg"></i>
+                        </div>
+                        <div class="flex-1">
+                            <h3 class="font-semibold text-white">Ennahar TV</h3>
+                            <p class="text-sm text-gray-400">جزائرية • عامة</p>
+                            <div class="flex items-center mt-1">
+                                <div class="w-2 h-2 bg-accent rounded-full mr-2"></div>
+                                <span class="text-xs text-accent">مباشر</span>
+                            </div>
+                        </div>
+                        <button class="text-gray-400 hover:text-accent transition-colors">
+                            <i class="fas fa-heart"></i>
+                        </button>
+                    </div>
+                </div>
+
+                <div class="channel-card algerian bg-surface rounded-lg p-4 hover:bg-gray-700 transition-colors cursor-pointer" onclick="playChannel('Echorouk TV')">
+                    <div class="flex items-center space-x-3 space-x-reverse">
+                        <div class="w-12 h-12 bg-gradient-to-br from-orange-500 to-orange-600 rounded-lg flex items-center justify-center">
+                            <i class="fas fa-broadcast-tower text-white text-lg"></i>
+                        </div>
+                        <div class="flex-1">
+                            <h3 class="font-semibold text-white">Echorouk TV</h3>
+                            <p class="text-sm text-gray-400">جزائرية • عامة</p>
+                            <div class="flex items-center mt-1">
+                                <div class="w-2 h-2 bg-accent rounded-full mr-2"></div>
+                                <span class="text-xs text-accent">مباشر</span>
+                            </div>
+                        </div>
+                        <button class="text-gray-400 hover:text-accent transition-colors">
+                            <i class="fas fa-heart"></i>
+                        </button>
+                    </div>
+                </div>
+
+                <!-- News Channels -->
+                <div class="channel-card news bg-surface rounded-lg p-4 hover:bg-gray-700 transition-colors cursor-pointer" onclick="playChannel('Al Jazeera')">
+                    <div class="flex items-center space-x-3 space-x-reverse">
+                        <div class="w-12 h-12 bg-gradient-to-br from-purple-500 to-purple-600 rounded-lg flex items-center justify-center">
+                            <i class="fas fa-newspaper text-white text-lg"></i>
+                        </div>
+                        <div class="flex-1">
+                            <h3 class="font-semibold text-white">Al Jazeera</h3>
+                            <p class="text-sm text-gray-400">إخبارية • دولية</p>
+                            <div class="flex items-center mt-1">
+                                <div class="w-2 h-2 bg-accent rounded-full mr-2"></div>
+                                <span class="text-xs text-accent">مباشر</span>
+                            </div>
+                        </div>
+                        <button class="text-gray-400 hover:text-accent transition-colors">
+                            <i class="fas fa-heart"></i>
+                        </button>
+                    </div>
+                </div>
+
+                <div class="channel-card news bg-surface rounded-lg p-4 hover:bg-gray-700 transition-colors cursor-pointer" onclick="playChannel('Al Arabiya')">
+                    <div class="flex items-center space-x-3 space-x-reverse">
+                        <div class="w-12 h-12 bg-gradient-to-br from-cyan-500 to-cyan-600 rounded-lg flex items-center justify-center">
+                            <i class="fas fa-globe text-white text-lg"></i>
+                        </div>
+                        <div class="flex-1">
+                            <h3 class="font-semibold text-white">Al Arabiya</h3>
+                            <p class="text-sm text-gray-400">إخبارية • دولية</p>
+                            <div class="flex items-center mt-1">
+                                <div class="w-2 h-2 bg-accent rounded-full mr-2"></div>
+                                <span class="text-xs text-accent">مباشر</span>
+                            </div>
+                        </div>
+                        <button class="text-gray-400 hover:text-accent transition-colors">
+                            <i class="fas fa-heart"></i>
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Kids Channels -->
+                <div class="channel-card kids bg-surface rounded-lg p-4 hover:bg-gray-700 transition-colors cursor-pointer" onclick="playChannel('Cartoon Network')">
+                    <div class="flex items-center space-x-3 space-x-reverse">
+                        <div class="w-12 h-12 bg-gradient-to-br from-pink-500 to-pink-600 rounded-lg flex items-center justify-center">
+                            <i class="fas fa-child text-white text-lg"></i>
+                        </div>
+                        <div class="flex-1">
+                            <h3 class="font-semibold text-white">Cartoon Network</h3>
+                            <p class="text-sm text-gray-400">أطفال • كرتون</p>
+                            <div class="flex items-center mt-1">
+                                <div class="w-2 h-2 bg-accent rounded-full mr-2"></div>
+                                <span class="text-xs text-accent">مباشر</span>
+                            </div>
+                        </div>
+                        <button class="text-gray-400 hover:text-accent transition-colors">
+                            <i class="fas fa-heart"></i>
+                        </button>
+                    </div>
+                </div>
+
+                <div class="channel-card kids bg-surface rounded-lg p-4 hover:bg-gray-700 transition-colors cursor-pointer" onclick="playChannel('Disney Channel')">
+                    <div class="flex items-center space-x-3 space-x-reverse">
+                        <div class="w-12 h-12 bg-gradient-to-br from-yellow-500 to-yellow-600 rounded-lg flex items-center justify-center">
+                            <i class="fas fa-star text-white text-lg"></i>
+                        </div>
+                        <div class="flex-1">
+                            <h3 class="font-semibold text-white">Disney Channel</h3>
+                            <p class="text-sm text-gray-400">أطفال • ديزني</p>
+                            <div class="flex items-center mt-1">
+                                <div class="w-2 h-2 bg-accent rounded-full mr-2"></div>
+                                <span class="text-xs text-accent">مباشر</span>
+                            </div>
+                        </div>
+                        <button class="text-gray-400 hover:text-accent transition-colors">
+                            <i class="fas fa-heart"></i>
+                        </button>
+                    </div>
+                </div>
+
+            </div>
+            <!-- @END_MAP )) -->
+        </div>
+        <!-- @END_COMPONENT: ChannelsList -->
+
+        <!-- @COMPONENT: FloatingActionButton -->
+        <div class="fixed bottom-6 left-6">
+            <button onclick="showAddChannelModal()" class="bg-accent hover:bg-green-600 text-white w-14 h-14 rounded-full shadow-lg flex items-center justify-center transition-all hover:scale-105">
+                <i class="fas fa-plus text-xl"></i>
+            </button>
+        </div>
+        <!-- @END_COMPONENT: FloatingActionButton -->
+    </div>
+    <!-- @END_COMPONENT: MainApp -->
+
+    <!-- @COMPONENT: AdminPanel -->
+    <div id="adminPanel" class="hidden fixed inset-0 bg-black/80 z-50 flex items-center justify-center p-4">
+        <div class="bg-surface rounded-lg w-full max-w-4xl max-h-[90vh] overflow-y-auto">
+            <div class="p-6">
+                <div class="flex items-center justify-between mb-6">
+                    <h2 class="text-2xl font-bold text-white flex items-center">
+                        <i class="fas fa-cog mr-3 text-accent"></i>
+                        لوحة التحكم الإدارية
+                    </h2>
+                    <button onclick="hideAdminPanel()" class="text-gray-400 hover:text-white transition-colors">
+                        <i class="fas fa-times text-xl"></i>
+                    </button>
+                </div>
+
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    <!-- Add Channel Form -->
+                    <div class="bg-primary rounded-lg p-6">
+                        <h3 class="text-lg font-semibold mb-4 text-white flex items-center">
+                            <i class="fas fa-plus-circle mr-2 text-accent"></i>
+                            إضافة قناة جديدة
+                        </h3>
+                        
+                        <form class="space-y-4">
+                            <div>
+                                <label class="block text-sm font-medium text-gray-300 mb-1">اسم القناة</label>
+                                <input type="text" class="w-full bg-dark text-white rounded-lg px-3 py-2 border border-gray-600 focus:border-accent focus:outline-none" placeholder="مثال: قناة الجزيرة">
+                            </div>
+                            
+                            <div>
+                                <label class="block text-sm font-medium text-gray-300 mb-1">رابط البث (m3u8)</label>
+                                <input type="url" class="w-full bg-dark text-white rounded-lg px-3 py-2 border border-gray-600 focus:border-accent focus:outline-none" placeholder="https://example.com/stream.m3u8">
+                            </div>
+                            
+                            <div>
+                                <label class="block text-sm font-medium text-gray-300 mb-1">الفئة</label>
+                                <select class="w-full bg-dark text-white rounded-lg px-3 py-2 border border-gray-600 focus:border-accent focus:outline-none">
+                                    <option value="sports">رياضية</option>
+                                    <option value="algerian">جزائرية</option>
+                                    <option value="news">إخبارية</option>
+                                    <option value="kids">أطفال</option>
+                                </select>
+                            </div>
+                            
+                            <div>
+                                <label class="block text-sm font-medium text-gray-300 mb-1">وصف القناة</label>
+                                <textarea class="w-full bg-dark text-white rounded-lg px-3 py-2 border border-gray-600 focus:border-accent focus:outline-none h-20" placeholder="وصف مختصر للقناة"></textarea>
+                            </div>
+                            
+                            <button type="submit" class="w-full bg-accent hover:bg-green-600 text-white py-2 rounded-lg font-semibold transition-colors">
+                                <i class="fas fa-save mr-2"></i>
+                                حفظ القناة
+                            </button>
+                        </form>
+                    </div>
+
+                    <!-- Channel Management -->
+                    <div class="bg-primary rounded-lg p-6">
+                        <h3 class="text-lg font-semibold mb-4 text-white flex items-center">
+                            <i class="fas fa-list mr-2 text-accent"></i>
+                            إدارة القنوات
+                        </h3>
+                        
+                        <div class="space-y-3 max-h-96 overflow-y-auto">
+                            <div class="bg-dark rounded-lg p-3 flex items-center justify-between">
+                                <div>
+                                    <h4 class="font-medium text-white">beIN Sports 1</h4>
+                                    <p class="text-sm text-gray-400">رياضية • نشطة</p>
+                                </div>
+                                <div class="flex space-x-2 space-x-reverse">
+                                    <button class="text-secondary hover:text-blue-400 transition-colors">
+                                        <i class="fas fa-edit"></i>
+                                    </button>
+                                    <button class="text-red-500 hover:text-red-400 transition-colors">
+                                        <i class="fas fa-trash"></i>
+                                    </button>
+                                </div>
+                            </div>
+                            
+                            <div class="bg-dark rounded-lg p-3 flex items-center justify-between">
+                                <div>
+                                    <h4 class="font-medium text-white">Ennahar TV</h4>
+                                    <p class="text-sm text-gray-400">جزائرية • نشطة</p>
+                                </div>
+                                <div class="flex space-x-2 space-x-reverse">
+                                    <button class="text-secondary hover:text-blue-400 transition-colors">
+                                        <i class="fas fa-edit"></i>
+                                    </button>
+                                    <button class="text-red-500 hover:text-red-400 transition-colors">
+                                        <i class="fas fa-trash"></i>
+                                    </button>
+                                </div>
+                            </div>
+                            
+                            <div class="bg-dark rounded-lg p-3 flex items-center justify-between">
+                                <div>
+                                    <h4 class="font-medium text-white">Al Jazeera</h4>
+                                    <p class="text-sm text-gray-400">إخبارية • نشطة</p>
+                                </div>
+                                <div class="flex space-x-2 space-x-reverse">
+                                    <button class="text-secondary hover:text-blue-400 transition-colors">
+                                        <i class="fas fa-edit"></i>
+                                    </button>
+                                    <button class="text-red-500 hover:text-red-400 transition-colors">
+                                        <i class="fas fa-trash"></i>
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Statistics -->
+                <div class="mt-6 grid grid-cols-2 md:grid-cols-4 gap-4">
+                    <div class="bg-primary rounded-lg p-4 text-center">
+                        <i class="fas fa-tv text-2xl text-accent mb-2"></i>
+                        <div class="text-2xl font-bold text-white">24</div>
+                        <div class="text-sm text-gray-400">إجمالي القنوات</div>
+                    </div>
+                    <div class="bg-primary rounded-lg p-4 text-center">
+                        <i class="fas fa-users text-2xl text-secondary mb-2"></i>
+                        <div class="text-2xl font-bold text-white">1,432</div>
+                        <div class="text-sm text-gray-400">المستخدمون النشطون</div>
+                    </div>
+                    <div class="bg-primary rounded-lg p-4 text-center">
+                        <i class="fas fa-play text-2xl text-warning mb-2"></i>
+                        <div class="text-2xl font-bold text-white">856</div>
+                        <div class="text-sm text-gray-400">المشاهدات اليوم</div>
+                    </div>
+                    <div class="bg-primary rounded-lg p-4 text-center">
+                        <i class="fas fa-signal text-2xl text-success mb-2"></i>
+                        <div class="text-2xl font-bold text-white">98%</div>
+                        <div class="text-sm text-gray-400">وقت التشغيل</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- @END_COMPONENT: AdminPanel -->
+
+    <!-- @COMPONENT: AddChannelModal -->
+    <div id="addChannelModal" class="hidden fixed inset-0 bg-black/80 z-50 flex items-center justify-center p-4">
+        <div class="bg-surface rounded-lg w-full max-w-md">
+            <div class="p-6">
+                <div class="flex items-center justify-between mb-4">
+                    <h3 class="text-xl font-semibold text-white">إضافة قناة سريعة</h3>
+                    <button onclick="hideAddChannelModal()" class="text-gray-400 hover:text-white">
+                        <i class="fas fa-times"></i>
+                    </button>
+                </div>
+                
+                <div class="space-y-4">
+                    <div>
+                        <label class="block text-sm font-medium text-gray-300 mb-1">رابط M3U8</label>
+                        <input type="url" class="w-full bg-dark text-white rounded-lg px-3 py-2 border border-gray-600 focus:border-accent focus:outline-none" placeholder="الصق الرابط هنا">
+                    </div>
+                    
+                    <div class="flex space-x-3 space-x-reverse">
+                        <button class="flex-1 bg-accent hover:bg-green-600 text-white py-2 rounded-lg font-semibold transition-colors">
+                            <i class="fas fa-plus mr-2"></i>
+                            إضافة
+                        </button>
+                        <button onclick="hideAddChannelModal()" class="flex-1 bg-gray-600 hover:bg-gray-500 text-white py-2 rounded-lg font-semibold transition-colors">
+                            إلغاء
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- @END_COMPONENT: AddChannelModal -->
+
+    <!-- @COMPONENT: Toast Notifications -->
+    <div id="toastContainer" class="fixed top-4 right-4 z-50 space-y-2">
+        <!-- Toast messages will be dynamically added here -->
+    </div>
+    <!-- @END_COMPONENT: Toast Notifications -->
+
+    <script>
+        // TODO: Implement video streaming using ExoPlayer or Video.js
+        // TODO: Add real-time channel updates from WordPress backend
+        // TODO: Implement user preferences and favorites system
+        // TODO: Add offline channel caching capability
+        
+        (function() {
+            // Application state management
+            let currentChannel = null;
+            let currentCategory = 'all';
+            
+            // DOM elements
+            const welcomeScreen = document.getElementById('welcomeScreen');
+            const mainApp = document.getElementById('mainApp');
+            const adminPanel = document.getElementById('adminPanel');
+            const addChannelModal = document.getElementById('addChannelModal');
+            
+            // Show main application
+            window.showMainApp = function() {
+                welcomeScreen.classList.add('hidden');
+                mainApp.classList.remove('hidden');
+                showToast('مرحباً بك في جنرال بلادي TV', 'success');
+            };
+            
+            // Category filtering
+            window.showCategory = function(category) {
+                currentCategory = category;
+                
+                // Update active tab
+                document.querySelectorAll('.category-tab').forEach(tab => {
+                    tab.classList.remove('active', 'bg-accent');
+                    tab.classList.add('bg-gray-600', 'hover:bg-gray-500');
+                });
+                
+                event.target.classList.add('active', 'bg-accent');
+                event.target.classList.remove('bg-gray-600', 'hover:bg-gray-500');
+                
+                // Filter channels
+                const channelCards = document.querySelectorAll('.channel-card');
+                channelCards.forEach(card => {
+                    if (category === 'all' || card.classList.contains(category)) {
+                        card.style.display = 'block';
+                    } else {
+                        card.style.display = 'none';
+                    }
+                });
+                
+                showToast(`تم تصفية القنوات: ${getCategoryName(category)}`, 'info');
+            };
+            
+            // Play channel
+            window.playChannel = function(channelName) {
+                currentChannel = channelName;
+                
+                // Update video player UI
+                const videoPlayer = document.getElementById('videoPlayer');
+                const playerContent = videoPlayer.querySelector('.absolute');
+                
+                playerContent.innerHTML = `
+                    <div class="w-full h-full bg-black flex items-center justify-center">
+                        <div class="text-center">
+                            <i class="fas fa-spinner fa-spin text-4xl text-white mb-4"></i>
+                            <p class="text-white text-lg">جاري تحميل ${channelName}...</p>
+                        </div>
+                    </div>
+                `;
+                
+                // Simulate loading
+                setTimeout(() => {
+                    playerContent.innerHTML = `
+                        <div class="w-full h-full bg-gradient-to-br from-blue-900 to-purple-900 flex items-center justify-center">
+                            <div class="text-center">
+                                <i class="fas fa-broadcast-tower text-6xl text-white mb-4"></i>
+                                <p class="text-white text-xl font-semibold">${channelName}</p>
+                                <p class="text-white/80">البث المباشر نشط</p>
+                            </div>
+                        </div>
+                        <div class="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/80 to-transparent p-4">
+                            <div class="flex items-center justify-between">
+                                <div class="flex items-center space-x-4 space-x-reverse">
+                                    <button class="text-white hover:text-accent transition-colors">
+                                        <i class="fas fa-pause text-2xl"></i>
+                                    </button>
+                                    <button class="text-white hover:text-accent transition-colors">
+                                        <i class="fas fa-volume-up text-lg"></i>
+                                    </button>
+                                    <div class="bg-white/20 h-1 w-32 rounded-full">
+                                        <div class="bg-accent h-full w-2/3 rounded-full"></div>
+                                    </div>
+                                </div>
+                                <div class="flex items-center space-x-2 space-x-reverse">
+                                    <button class="text-white hover:text-accent transition-colors">
+                                        <i class="fas fa-expand text-lg"></i>
+                                    </button>
+                                    <button class="text-white hover:text-accent transition-colors">
+                                        <i class="fas fa-cog text-lg"></i>
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    `;
+                }, 1500);
+                
+                showToast(`تم تشغيل ${channelName}`, 'success');
+            };
+            
+            // Admin panel
+            window.showAdminPanel = function() {
+                adminPanel.classList.remove('hidden');
+            };
+            
+            window.hideAdminPanel = function() {
+                adminPanel.classList.add('hidden');
+            };
+            
+            // Add channel modal
+            window.showAddChannelModal = function() {
+                addChannelModal.classList.remove('hidden');
+            };
+            
+            window.hideAddChannelModal = function() {
+                addChannelModal.classList.add('hidden');
+            };
+            
+            // Toast notifications
+            window.showToast = function(message, type = 'info') {
+                const toast = document.createElement('div');
+                const bgColor = type === 'success' ? 'bg-green-600' : 
+                              type === 'error' ? 'bg-red-600' : 'bg-blue-600';
+                
+                toast.className = `${bgColor} text-white px-4 py-3 rounded-lg shadow-lg flex items-center space-x-2 space-x-reverse transition-all duration-300`;
+                toast.innerHTML = `
+                    <i class="fas fa-${type === 'success' ? 'check' : type === 'error' ? 'exclamation' : 'info'}-circle"></i>
+                    <span>${message}</span>
+                `;
+                
+                document.getElementById('toastContainer').appendChild(toast);
+                
+                // Auto remove after 3 seconds
+                setTimeout(() => {
+                    toast.remove();
+                }, 3000);
+            };
+            
+            // Helper functions
+            function getCategoryName(category) {
+                const names = {
+                    'all': 'جميع القنوات',
+                    'sports': 'القنوات الرياضية',
+                    'algerian': 'القنوات الجزائرية',
+                    'news': 'القنوات الإخبارية',
+                    'kids': 'قنوات الأطفال'
+                };
+                return names[category] || 'غير محدد';
+            }
+            
+            // Initialize application
+            document.addEventListener('DOMContentLoaded', function() {
+                // Auto-show welcome screen
+                setTimeout(() => {
+                    showToast('مرحباً بك في جنرال بلادي TV', 'success');
+                }, 500);
+            });
+        })();
+    </script>
+</body>
+</html>

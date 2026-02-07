@@ -9,6 +9,7 @@ import VideoPlayer from "@/components/video-player";
 import CategoryTabs from "@/components/category-tabs";
 import ChannelCard from "@/components/channel-card";
 import FavoritesModal from "@/components/favorites-modal";
+import { DataSaverToggle } from "@/components/data-saver-toggle";
 import { useToast } from "@/hooks/use-toast";
 import { formatArabicNumber } from "@/lib/arabic-utils";
 import type { Channel } from "@shared/schema";
@@ -127,6 +128,8 @@ export default function Home() {
               onPlayChannel={handleChannelPlay}
               currentChannelId={currentChannel?.id}
             />
+            
+            <DataSaverToggle />
             
             <Link href="/admin">
               <Button variant="ghost" size="icon" className="text-gray-400 hover:text-white hover:bg-white/10 w-9 h-9">

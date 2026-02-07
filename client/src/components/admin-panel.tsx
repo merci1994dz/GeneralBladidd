@@ -1,4 +1,4 @@
-import { useState, useMemo } from "react";
+import { useState } from "react";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -10,9 +10,10 @@ import { apiRequest } from "@/lib/queryClient";
 import { 
   Save, Plus, Edit, Trash2, TrendingUp, Activity, Search, X,
   Upload, Download, ToggleLeft, ToggleRight, Star, StarOff,
-  Tv, Radio, ChevronLeft, ChevronRight, AlertTriangle, Check
+  Tv, Radio, ChevronLeft, ChevronRight, AlertTriangle, Check, BarChart3
 } from "lucide-react";
 import { formatArabicNumber, arabicCategoryNames, getCategoryIcon } from "@/lib/arabic-utils";
+import { StatsDashboard } from "./stats-dashboard";
 import type { Channel, InsertChannel } from "@shared/schema";
 
 const ITEMS_PER_PAGE = 20;
@@ -32,7 +33,7 @@ export default function AdminPanel() {
   const [searchQuery, setSearchQuery] = useState("");
   const [filterCategory, setFilterCategory] = useState("all");
   const [currentPage, setCurrentPage] = useState(1);
-  const [activeTab, setActiveTab] = useState<'overview' | 'channels' | 'add' | 'import'>('overview');
+  const [activeTab, setActiveTab] = useState<'overview' | 'channels' | 'add' | 'import' | 'stats'>('overview');
   const [m3uUrl, setM3uUrl] = useState("");
   const [m3uText, setM3uText] = useState("");
   const [importLoading, setImportLoading] = useState(false);
@@ -317,6 +318,7 @@ export default function AdminPanel() {
       <div className="flex gap-2 overflow-x-auto pb-2">
         {[
           { id: 'overview' as const, label: 'نظرة عامة', icon: TrendingUp },
+          { id: 'stats' as const, label: 'إحصائيات المشاهدة', icon: BarChart3 },
           { id: 'channels' as const, label: 'إدارة القنوات', icon: Tv },
           { id: 'add' as const, label: editingChannel ? 'تعديل قناة' : 'إضافة قناة', icon: Plus },
           { id: 'import' as const, label: 'استيراد / تصدير', icon: Upload },
@@ -394,6 +396,11 @@ export default function AdminPanel() {
             </CardContent>
           </Card>
         </div>
+      )}
+
+      {/* Statistics Tab */}
+      {activeTab === 'stats' && (
+        <StatsDashboard />
       )}
 
       {/* Channels Management Tab */}

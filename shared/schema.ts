@@ -30,6 +30,8 @@ export const users = sqliteTable("users", {
   id: integer("id").primaryKey({ autoIncrement: true }),
   username: text("username").notNull().unique(),
   password: text("password").notNull(),
+  role: text("role").notNull().default("admin"), // admin, viewer
+  createdAt: integer("created_at", { mode: 'timestamp' }).default(new Date()),
 });
 
 export const insertUserSchema = createInsertSchema(users).pick({
@@ -39,6 +41,23 @@ export const insertUserSchema = createInsertSchema(users).pick({
 
 export type InsertUser = z.infer<typeof insertUserSchema>;
 export type User = typeof users.$inferSelect;
+
+export const viewStats = sqliteTable("view_stats", {
+  id: integer("id").primaryKey({ autoIncrement: true }),
+  channelId: integer("channel_id").notNull(),
+  ipAddress: text("ip_address"),
+  userAgent: text("user_agent"),
+  duration: integer("duration").default(0), // seconds
+  timestamp: integer("timestamp", { mode: 'timestamp' }).default(new Date()),
+});
+
+export const insertViewStatSchema = createInsertSchema(viewStats).omit({
+  id: true,
+  timestamp: true,
+});
+
+export type ViewStat = typeof viewStats.$inferSelect;
+export type InsertViewStat = z.infer<typeof insertViewStatSchema>;
 
 // Channel categories
 export const channelCategories = [

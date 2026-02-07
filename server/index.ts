@@ -1,9 +1,12 @@
 import express, { type Request, Response, NextFunction } from "express";
+import compression from "compression";
 import { registerRoutes } from "./routes";
 import { setupVite, serveStatic, log } from "./vite";
 import { seedDatabase } from "./seed";
+import { createDefaultAdmin } from "./auth";
 
 const app = express();
+app.use(compression());
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 
@@ -41,6 +44,7 @@ app.use((req, res, next) => {
   // Initialize database with sample data
   try {
     await seedDatabase();
+    await createDefaultAdmin();
   } catch (error) {
     console.error("Failed to seed database:", error);
   }

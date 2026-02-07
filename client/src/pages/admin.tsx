@@ -1,9 +1,45 @@
+import { useState, useEffect } from "react";
 import { Link } from "wouter";
 import { Button } from "@/components/ui/button";
 import { ArrowRight, Shield, Tv } from "lucide-react";
 import AdminPanel from "@/components/admin-panel";
+import { AdminLogin } from "@/components/admin-login";
 
 export default function Admin() {
+  const [isAuthenticated, setIsAuthenticated] = useState(false);
+  const [isChecking, setIsChecking] = useState(true);
+
+  useEffect(() => {
+    const authHeader = localStorage.getItem('adminAuth');
+    if (authHeader) {
+      // Verify auth
+      fetch('/api/auth/login', {
+        method: 'POST',
+        headers: { 'Authorization': authHeader }
+      })
+        .then(res => {
+          setIsAuthenticated(res.ok);
+          if (!res.ok) localStorage.removeItem('adminAuth');
+        })
+        .catch(() => setIsAuthenticated(false))
+        .finally(() => setIsChecking(false));
+    } else {
+      setIsChecking(false);
+    }
+  }, []);
+
+  if (isChecking) {
+    return (
+      <div className="min-h-screen bg-tv-dark flex items-center justify-center">
+        <div className="text-white">جاري التحميل...</div>
+      </div>
+    );
+  }
+
+  if (!isAuthenticated) {
+    return <AdminLogin onLoginSuccess={() => setIsAuthenticated(true)} />;
+  }
+
   return (
     <div className="min-h-screen bg-tv-dark">
       {/* Admin Header */}

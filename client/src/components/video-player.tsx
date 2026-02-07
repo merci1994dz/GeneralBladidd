@@ -2,6 +2,7 @@ import { useEffect, useRef, useState } from "react";
 import { Play, Pause, Volume2, VolumeX, Maximize, Minimize, Loader2, AlertCircle, RefreshCw, Tv } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Slider } from "@/components/ui/slider";
+import { useDataSaver } from "./data-saver-toggle";
 import Hls from "hls.js";
 import type { Channel } from "@shared/schema";
 
@@ -21,6 +22,8 @@ export default function VideoPlayer({ channel }: VideoPlayerProps) {
   const [isFullscreen, setIsFullscreen] = useState(false);
   const [showControls, setShowControls] = useState(true);
   const controlsTimeoutRef = useRef<NodeJS.Timeout>();
+  const dataSaver = useDataSaver();
+  const [watchStartTime, setWatchStartTime] = useState<number>(0);
 
   useEffect(() => {
     if (!channel || !videoRef.current) return;
@@ -42,10 +45,10 @@ export default function VideoPlayer({ channel }: VideoPlayerProps) {
       if (isHLS && Hls.isSupported()) {
         const hls = new Hls({
           enableWorker: true,
-          lowLatencyMode: true,
-          backBufferLength: 90,
-          maxBufferLength: 30,
-          maxMaxBufferLength: 60,
+          lowLatencyMode: !dataSaver,
+          backBufferLength: dataSaver ? 30 : 90,
+          maxBufferLength: dataSaver ? 15 : 30,
+          maxMaxBufferLength: dataSaver ? 30 : 60,
         });
         hlsRef.current = hls;
         hls.loadSource(channel.url);
@@ -91,13 +94,26 @@ export default function VideoPlayer({ channel }: VideoPlayerProps) {
     };
 
     loadSource();
+    setWatchStartTime(Date.now());
 
     return () => {
       if (hlsRef.current) {
         hlsRef.current.destroy();
       }
+      
+      // Record view statistics
+      if (channel && watchStartTime > 0) {
+        const duration = Math.floor((Date.now() - watchStartTime) / 1000);
+        if (duration > 5) { // Only record if watched for more than 5 seconds
+          fetch('/api/stats/view', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ channelId: channel.id, duration })
+          }).catch(() => {}); // Silent fail
+        }
+      }
     };
-  }, [channel]);
+  }, [channel, watchStartTime]);
 
   useEffect(() => {
     const video = videoRef.current;

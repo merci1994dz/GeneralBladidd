@@ -7,9 +7,11 @@ export const channels = sqliteTable("channels", {
   name: text("name").notNull(),
   url: text("url").notNull(),
   category: text("category").notNull(),
+  country: text("country").default("other"),
   description: text("description"),
   logo: text("logo"),
   isActive: integer("is_active", { mode: 'boolean' }).default(true),
+  isFeatured: integer("is_featured", { mode: 'boolean' }).default(false),
   createdAt: integer("created_at", { mode: 'timestamp' }).default(new Date()),
 });
 
@@ -38,15 +40,21 @@ export const insertUserSchema = createInsertSchema(users).pick({
 export type InsertUser = z.infer<typeof insertUserSchema>;
 export type User = typeof users.$inferSelect;
 
-// Channel categories enum
+// Channel categories
 export const channelCategories = [
   'sports',
-  'algerian', 
+  'algerian',
+  'moroccan',
+  'tunisian',
   'news',
   'kids',
   'entertainment',
   'religious',
-  'documentary'
+  'documentary',
+  'music',
+  'french',
+  'turkish',
+  'other'
 ] as const;
 
 export type ChannelCategory = typeof channelCategories[number];

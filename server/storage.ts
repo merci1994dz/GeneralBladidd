@@ -1,28 +1,23 @@
 import { channels, users, type Channel, type InsertChannel, type UpdateChannel, type User, type InsertUser } from "@shared/schema";
 import { db } from "./db";
-import { eq } from "drizzle-orm";
+import { eq, sql } from "drizzle-orm";
 
 export interface IStorage {
-  // Channel operations
   getAllChannels(): Promise<Channel[]>;
   getChannelById(id: number): Promise<Channel | undefined>;
   getChannelsByCategory(category: string): Promise<Channel[]>;
   createChannel(channel: InsertChannel): Promise<Channel>;
   updateChannel(id: number, channel: UpdateChannel): Promise<Channel | undefined>;
   deleteChannel(id: number): Promise<boolean>;
-  
-  // User operations
+  deleteAllChannels(): Promise<void>;
   getUser(id: number): Promise<User | undefined>;
   getUserByUsername(username: string): Promise<User | undefined>;
   createUser(user: InsertUser): Promise<User>;
 }
 
-// Legacy MemStorage class - kept for reference but not used
-
-// Database storage implementation
 export class DatabaseStorage implements IStorage {
   async getAllChannels(): Promise<Channel[]> {
-    const result = await db.select().from(channels).where(eq(channels.isActive, true));
+    const result = await db.select().from(channels);
     return result;
   }
 
@@ -34,7 +29,7 @@ export class DatabaseStorage implements IStorage {
   async getChannelsByCategory(category: string): Promise<Channel[]> {
     const result = await db.select().from(channels)
       .where(eq(channels.category, category));
-    return result.filter(channel => channel.isActive);
+    return result;
   }
 
   async createChannel(insertChannel: InsertChannel): Promise<Channel> {
@@ -56,7 +51,11 @@ export class DatabaseStorage implements IStorage {
 
   async deleteChannel(id: number): Promise<boolean> {
     const result = await db.delete(channels).where(eq(channels.id, id));
-    return (result.rowCount || 0) > 0;
+    return true;
+  }
+
+  async deleteAllChannels(): Promise<void> {
+    await db.delete(channels);
   }
 
   async getUser(id: number): Promise<User | undefined> {

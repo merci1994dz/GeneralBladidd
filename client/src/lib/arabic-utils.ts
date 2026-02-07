@@ -1,42 +1,63 @@
-export const arabicCategoryNames = {
+export const arabicCategoryNames: Record<string, string> = {
   all: "جميع القنوات",
   sports: "رياضية",
-  algerian: "جزائرية", 
+  algerian: "جزائرية",
+  moroccan: "مغربية",
+  tunisian: "تونسية",
   news: "إخبارية",
   kids: "أطفال",
   entertainment: "ترفيه",
   religious: "دينية",
-  documentary: "وثائقية"
-} as const;
+  documentary: "وثائقية",
+  music: "موسيقى",
+  french: "فرنسية",
+  turkish: "تركية",
+  other: "أخرى"
+};
 
 export const getCategoryIcon = (category: string): string => {
-  const icons = {
-    all: "fas fa-th-large",
-    sports: "fas fa-futbol",
-    algerian: "fas fa-flag",
-    news: "fas fa-newspaper",
-    kids: "fas fa-child",
-    entertainment: "fas fa-music",
-    religious: "fas fa-mosque",
-    documentary: "fas fa-film"
+  const icons: Record<string, string> = {
+    all: "📺",
+    sports: "⚽",
+    algerian: "🇩🇿",
+    moroccan: "🇲🇦",
+    tunisian: "🇹🇳",
+    news: "📰",
+    kids: "🧸",
+    entertainment: "🎬",
+    religious: "🕌",
+    documentary: "🎥",
+    music: "🎵",
+    french: "🇫🇷",
+    turkish: "🇹🇷",
+    other: "📡"
   };
-  return icons[category as keyof typeof icons] || "fas fa-tv";
+  return icons[category] || "📡";
 };
 
 export const getCategoryColor = (category: string): string => {
-  const colors = {
+  const colors: Record<string, string> = {
     sports: "from-red-500 to-red-600",
-    algerian: "from-green-500 to-green-600",
+    algerian: "from-green-600 to-green-700",
+    moroccan: "from-red-600 to-red-700",
+    tunisian: "from-red-500 to-red-600",
     news: "from-purple-500 to-purple-600",
-    kids: "from-pink-500 to-pink-600",
+    kids: "from-pink-400 to-pink-500",
     entertainment: "from-yellow-500 to-yellow-600",
-    religious: "from-blue-500 to-blue-600",
-    documentary: "from-gray-500 to-gray-600"
+    religious: "from-emerald-500 to-emerald-600",
+    documentary: "from-cyan-500 to-cyan-600",
+    music: "from-violet-500 to-violet-600",
+    french: "from-blue-500 to-blue-600",
+    turkish: "from-rose-500 to-rose-600",
+    other: "from-gray-500 to-gray-600"
   };
-  return colors[category as keyof typeof colors] || "from-blue-500 to-blue-600";
+  return colors[category] || "from-blue-500 to-blue-600";
 };
 
 export const formatArabicNumber = (number: number): string => {
-  const arabicDigits = ['٠', '١', '٢', '٣', '٤', '٥', '٦', '٧', '٨', '٩'];
-  return number.toString().replace(/\d/g, (digit) => arabicDigits[parseInt(digit)]);
+  return number.toLocaleString('ar-EG');
+};
+
+export const getCategoryEmoji = (category: string): string => {
+  return getCategoryIcon(category);
 };

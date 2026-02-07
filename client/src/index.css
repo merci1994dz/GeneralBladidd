@@ -1,5 +1,5 @@
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
-@import url('https://fonts.googleapis.com/css2?family=Amiri:wght@400;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Tajawal:wght@300;400;500;700;800;900&display=swap');
 
 @tailwind base;
 @tailwind components;
@@ -25,19 +25,20 @@
   --destructive: hsl(0, 84%, 60%);
   --destructive-foreground: hsl(210, 40%, 98%);
   --ring: hsl(222, 47%, 11%);
-  --radius: 0.5rem;
+  --radius: 0.75rem;
   
-  /* Enhanced Arabic TV App Colors */
-  --tv-primary: hsl(220, 30%, 8%);
-  --tv-secondary: hsl(210, 100%, 55%);
-  --tv-accent: hsl(140, 85%, 45%);
-  --tv-dark: hsl(220, 35%, 3%);
-  --tv-surface: hsl(220, 20%, 12%);
-  --tv-success: hsl(140, 85%, 45%);
+  /* TV App Colors */
+  --tv-primary: hsl(225, 35%, 7%);
+  --tv-secondary: hsl(217, 100%, 58%);
+  --tv-accent: hsl(152, 85%, 42%);
+  --tv-dark: hsl(225, 40%, 4%);
+  --tv-surface: hsl(225, 25%, 11%);
+  --tv-surface-hover: hsl(225, 25%, 15%);
+  --tv-success: hsl(152, 85%, 42%);
   --tv-warning: hsl(45, 95%, 55%);
-  --tv-gold: hsl(50, 100%, 65%);
-  --tv-gradient-start: hsl(220, 30%, 8%);
-  --tv-gradient-end: hsl(220, 35%, 3%);
+  --tv-gold: hsl(45, 100%, 60%);
+  --tv-gradient-start: hsl(225, 35%, 7%);
+  --tv-gradient-end: hsl(225, 40%, 4%);
 }
 
 .dark {
@@ -68,123 +69,121 @@
   }
 
   body {
-    @apply font-sans antialiased bg-background text-foreground;
-    font-family: 'Amiri', 'Inter', sans-serif;
+    @apply font-sans antialiased;
+    font-family: 'Tajawal', 'Inter', sans-serif;
     direction: rtl;
+    background-color: var(--tv-dark);
+    color: white;
   }
 
   html {
     direction: rtl;
+    scroll-behavior: smooth;
   }
   
-  /* Arabic text improvements */
   .arabic-text {
-    font-family: 'Amiri', serif;
+    font-family: 'Tajawal', sans-serif;
     font-weight: 400;
   }
   
   .arabic-heading {
-    font-family: 'Amiri', serif;
+    font-family: 'Tajawal', sans-serif;
     font-weight: 700;
+  }
+
+  /* Custom scrollbar */
+  ::-webkit-scrollbar {
+    width: 6px;
+    height: 6px;
+  }
+  
+  ::-webkit-scrollbar-track {
+    background: var(--tv-dark);
+  }
+  
+  ::-webkit-scrollbar-thumb {
+    background: var(--tv-surface);
+    border-radius: 3px;
+  }
+  
+  ::-webkit-scrollbar-thumb:hover {
+    background: var(--tv-surface-hover);
   }
 }
 
 @layer utilities {
-  .tv-primary {
-    background-color: var(--tv-primary);
-  }
+  .bg-tv-primary { background-color: var(--tv-primary); }
+  .bg-tv-secondary { background-color: var(--tv-secondary); }
+  .bg-tv-accent { background-color: var(--tv-accent); }
+  .bg-tv-dark { background-color: var(--tv-dark); }
+  .bg-tv-surface { background-color: var(--tv-surface); }
+  .bg-tv-surface-hover { background-color: var(--tv-surface-hover); }
+  .bg-tv-gold { background-color: var(--tv-gold); }
   
-  .tv-secondary {
-    background-color: var(--tv-secondary);
-  }
+  .text-tv-accent { color: var(--tv-accent); }
+  .text-tv-secondary { color: var(--tv-secondary); }
+  .text-tv-gold { color: var(--tv-gold); }
   
-  .tv-accent {
-    background-color: var(--tv-accent);
-  }
+  .hover\:bg-tv-accent:hover { background-color: var(--tv-accent); }
+  .hover\:bg-tv-secondary:hover { background-color: var(--tv-secondary); }
+  .hover\:bg-tv-surface-hover:hover { background-color: var(--tv-surface-hover); }
   
-  .tv-dark {
-    background-color: var(--tv-dark);
-  }
+  .border-tv-accent { border-color: var(--tv-accent); }
+  .focus\:border-tv-accent:focus { border-color: var(--tv-accent); }
   
-  .tv-surface {
-    background-color: var(--tv-surface);
-  }
-  
-  .text-tv-accent {
-    color: var(--tv-accent);
-  }
-  
-  .text-tv-secondary {
-    color: var(--tv-secondary);
-  }
-  
-  .bg-tv-primary {
-    background-color: var(--tv-primary);
-  }
-  
-  .bg-tv-secondary {
-    background-color: var(--tv-secondary);
-  }
-  
-  .bg-tv-accent {
-    background-color: var(--tv-accent);
-  }
-  
-  .bg-tv-dark {
-    background-color: var(--tv-dark);
-  }
-  
-  .bg-tv-surface {
-    background-color: var(--tv-surface);
-  }
-  
-  .hover\:bg-tv-accent:hover {
-    background-color: var(--tv-accent);
-  }
-  
-  .hover\:bg-tv-secondary:hover {
-    background-color: var(--tv-secondary);
-  }
-  
-  .border-tv-accent {
-    border-color: var(--tv-accent);
-  }
-  
-  .focus\:border-tv-accent:focus {
-    border-color: var(--tv-accent);
-  }
-  
-  /* Enhanced gradient utilities */
   .bg-tv-gradient {
     background: linear-gradient(135deg, var(--tv-gradient-start), var(--tv-gradient-end));
   }
-  
-  .bg-tv-gold {
-    background-color: var(--tv-gold);
+
+  .glass-effect {
+    background: rgba(255, 255, 255, 0.05);
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(255, 255, 255, 0.1);
   }
-  
-  .text-tv-gold {
-    color: var(--tv-gold);
+
+  .glow-accent {
+    box-shadow: 0 0 20px rgba(34, 197, 94, 0.3);
   }
-  
-  /* Animation utilities */
+
+  .glow-gold {
+    box-shadow: 0 0 20px rgba(234, 179, 8, 0.3);
+  }
+
   @keyframes shimmer {
-    0% {
-      background-position: -200px 0;
-    }
-    100% {
-      background-position: calc(200px + 100%) 0;
-    }
+    0% { background-position: -200px 0; }
+    100% { background-position: calc(200px + 100%) 0; }
   }
   
   .shimmer {
-    background: linear-gradient(
-      90deg,
-      rgba(255, 255, 255, 0) 0%,
-      rgba(255, 255, 255, 0.2) 50%,
-      rgba(255, 255, 255, 0) 100%
-    );
+    background: linear-gradient(90deg, rgba(255,255,255,0) 0%, rgba(255,255,255,0.1) 50%, rgba(255,255,255,0) 100%);
     background-size: 200px 100%;
     animation: shimmer 1.5s infinite;
+  }
+
+  @keyframes fadeInUp {
+    from { opacity: 0; transform: translateY(20px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  .animate-fade-in-up {
+    animation: fadeInUp 0.5s ease-out forwards;
+  }
+
+  @keyframes slideInRight {
+    from { opacity: 0; transform: translateX(30px); }
+    to { opacity: 1; transform: translateX(0); }
+  }
+
+  .animate-slide-in-right {
+    animation: slideInRight 0.4s ease-out forwards;
+  }
+
+  @keyframes pulse-glow {
+    0%, 100% { box-shadow: 0 0 5px rgba(34, 197, 94, 0.5); }
+    50% { box-shadow: 0 0 20px rgba(34, 197, 94, 0.8); }
+  }
+
+  .animate-pulse-glow {
+    animation: pulse-glow 2s ease-in-out infinite;
   }
 }
